@@ -1,2 +1,14 @@
 allow hal_nfc_default mnt_vendor_file:dir search;
-r_dir_file(hal_nfc_default, persist_lg_data_file)
+
+# nfc_hal_dm_check_crc / _update_crc / _remove_crc keep a checksum of the
+# EEPROM configuration in /mnt/vendor/persist-lg/felica/cofigCRC, so that the
+# controller is only reflashed when libnfc-cxd-RF.conf actually changes.
+# Reading it is not enough: update creates the file and remove unlinks it.
+allow hal_nfc_default persist_lg_data_file:dir { r_dir_perms w_dir_perms };
+allow hal_nfc_default persist_lg_data_file:file create_file_perms;
+
+# The NCI patch image is /vendor/firmware/cxd224x_firmware.bin, named by
+# FW_PATCH in libnfc-cxd22xx.conf. The firmware_file label that hal_nfc.te
+# grants covers /firmware and /vendor/firmware_mnt; /vendor/firmware is
+# vendor_firmware_file.
+r_dir_file(hal_nfc_default, vendor_firmware_file)
