@@ -21,6 +21,26 @@ PRODUCT_PACKAGES += \
 PRODUCT_PRODUCT_PROPERTIES += \
 	ro.boot.vendor.lge.nfc.vendor=sony
 
+# FeliCa (Osaifu-Keitai). All prebuilt java - no boot jar, no resource library.
+# These are the japanese SKUs' own, which is why they are here rather than in
+# joan-common.
+#
+# MobileFeliCaClient will not start without the "felica" binder service, which
+# on stock comes from LG's fork of packages/apps/Nfc; the reimplementation is
+# in that app. See docs/felica-port.md.
+# The xml and cfg files are not listed here: extract_utils emits those as
+# PRODUCT_COPY_FILES in l01k-vendor.mk, not as modules, so naming them would
+# only get them rejected as non-existent.
+PRODUCT_PACKAGES += \
+	MobileFeliCaClient \
+	MobileFeliCaMenuMainApp \
+	MobileFeliCaMenuApp \
+	MobileFeliCaSettingApp \
+	MobileFeliCaWebPlugin \
+	MobileFeliCaWebPluginBoot \
+	com.felicanetworks.felica \
+	com.felicanetworks.felicaextra
+
 PRODUCT_SOONG_NAMESPACES += \
     $(DEVICE_PATH)
 
