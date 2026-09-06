@@ -78,16 +78,19 @@ system/etc/felica/mfs.cfg
 # menu apps PRESIGNED - the permit is issued against that key, and a repacked
 # MobileFeliCaMenuMainApp would not verify.
 #
-# MobileFeliCaClient is the exception: it is repacked to restore its own
-# logging (see extract-files.py) and comes back platform-signed. Nothing
-# checks *its* signature except felica_access.xml, which NfceeAccessControl
-# also satisfies for platform-signed callers.
+# MobileFeliCaClient is the one that has to stay PRESIGNED for a second
+# reason: Play ships updates for it, and an update only installs over a
+# package signed by the same key. It was repacked for a while to restore its
+# own logging, which cost it that signature and pinned it at the version this
+# dump carries - and a 2018 client under a Play-updated Osaifu-Keitai is
+# exactly the mismatch that makes the app quit on startup.
 #
 # These stay on /product because com.felicanetworks.felica.xml names
 # /product/framework/com.felicanetworks.felica.jar by absolute path; there is a
 # real product partition here, so nothing has to move.
 #
-# The "felica" system service these need is now in packages/apps/Nfc; see
+# The "felica" system service these need is in packages/apps/FelicaService,
+# which forwards to the half of it that stays in the nfc process; see
 # docs/felica-port.md for how far Osaifu-Keitai actually gets.
 product/etc/felica_access.xml|465d749a7e06a7d7e76a988635413b8321dc871b|d5dd6c28105479e8f78361c4a1af2a8b23f26825
 product/etc/permissions/com.felicanetworks.felica.xml|3650c359e23688b4d56166f674e3f4e0965fc399
@@ -106,9 +109,9 @@ product/app/MobileFeliCaWebPluginBoot/MobileFeliCaWebPluginBoot.apk;PRESIGNED|2e
 # APK Signing Block, and v1 signs entry contents rather than how they are
 # packed - but the apk would then have to be realigned, and the only thing the
 # check buys is that ART can map the dex instead of unpacking it once into
-# dalvik-cache. Not worth rewriting a signed blob over, so the check is skipped.
-# MobileFeliCaClient is repacked anyway, so it comes out of that clean.
-product/priv-app/MobileFeliCaClient/MobileFeliCaClient.apk|4a3b79cc68f56d214e8068b457edec86d9a40961|7b8d177686094e46e9c52b70d975c84c87126492
+# dalvik-cache. Not worth rewriting a signed blob over, so the check is
+# skipped. MobileFeliCaClient is packed the same way and needs the same.
+product/priv-app/MobileFeliCaClient/MobileFeliCaClient.apk;PRESIGNED;SKIPAPKCHECKS|4a3b79cc68f56d214e8068b457edec86d9a40961
 product/priv-app/MobileFeliCaMenuMainApp/MobileFeliCaMenuMainApp.apk;PRESIGNED;SKIPAPKCHECKS|7104d467a6de1ba2a9e8296f357586480b399aed
 
 # Wifi
