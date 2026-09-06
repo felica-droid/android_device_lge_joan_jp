@@ -26,11 +26,14 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # joan-common.
 #
 # MobileFeliCaClient will not start without the "felica" binder service, which
-# on stock comes from LG's fork of packages/apps/Nfc; the reimplementation is
-# in that app. See docs/felica-port.md.
+# on stock comes from LG's fork of packages/apps/Nfc. Here it is its own app,
+# packages/apps/FelicaService, which forwards the element calls to the half
+# that has to stay inside the nfc process. See docs/felica-port.md.
 # The xml and cfg files are not listed here: extract_utils emits those as
 # PRODUCT_COPY_FILES in joan_jp-vendor.mk, not as modules, so naming them
 # only get them rejected as non-existent.
+$(call inherit-product, packages/apps/FelicaService/device.mk)
+
 PRODUCT_PACKAGES += \
 	MobileFeliCaClient \
 	MobileFeliCaMenuMainApp \
