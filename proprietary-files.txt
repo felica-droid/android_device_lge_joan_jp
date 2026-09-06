@@ -1,6 +1,21 @@
 # All unpinned blobs below are from L-01K L-01K20k
 # joan_dcm_jp-user 9 PKQ1.190414.001 20072184679ed release-keys
 
+# Audio calibration (L-01K)
+# joan-common carries one acdb set for every joan, and it is not either
+# japanese handset's - LG calibrates these per model. Both SKUs therefore ship
+# their own copy here and init.joan.rc binds the matching one, which leaves the
+# set in joan-common to the variants that have nothing better.
+vendor/etc/acdbdata/Bluetooth_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Bluetooth_cal.acdb
+vendor/etc/acdbdata/Codec_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Codec_cal.acdb
+vendor/etc/acdbdata/General_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/General_cal.acdb
+vendor/etc/acdbdata/Global_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Global_cal.acdb
+vendor/etc/acdbdata/Handset_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Handset_cal.acdb
+vendor/etc/acdbdata/Hdmi_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Hdmi_cal.acdb
+vendor/etc/acdbdata/Headset_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Headset_cal.acdb
+vendor/etc/acdbdata/Speaker_cal.acdb:vendor/etc/acdbdata_joan_dcm_jp/Speaker_cal.acdb
+vendor/etc/acdbdata/adsp_avs_config.acdb:vendor/etc/acdbdata_joan_dcm_jp/adsp_avs_config.acdb
+
 # Graphics (Firmware)
 vendor/firmware/a540_zap.b00
 vendor/firmware/a540_zap.b01
@@ -40,7 +55,56 @@ vendor/lib64/hw/nfc_lg.default.so
 vendor/lib64/hw/vendor.lge.hardware.nfc@1.1-impl.so
 vendor/lib64/libLGnfc_config_vendor.so
 
+# FeliCa
+# The mobile FeliCa client and the felica system service are not here yet.
+# These are the files that differ between the two japanese handsets - mfs.cfg
+# and mfm.cfg carry a per-model certificate, config_felica.xml the antenna
+# autotune table - and init.joan.rc needs the docomo set in place to have
+# something to bind the LGV35 one over.
+system/etc/felica/common.cfg
+system/etc/felica/config_felica.xml
+system/etc/felica/felica.cfg
+system/etc/felica/mfc_push.cfg
+system/etc/felica/mfm.cfg
+system/etc/felica/mfs.cfg
+
 # Wifi
 vendor/etc/wifi/bdwlan.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan.bin
 vendor/etc/wifi/bdwlan_ch0.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan_ch0.bin
 vendor/etc/wifi/bdwlan_ch1.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan_ch1.bin
+
+# Everything below belongs to the other japanese handset. lineage_l01k serves
+# both, and init.joan.rc binds these over their counterparts above once it
+# knows it is running on an LGV35, so they land beside them rather than
+# replacing them. Extract them with the LGV35 dump as the source:
+#
+#   ./extract-files.py --only-target -s '*(LGV35)' <LGV3520f>/extracted
+#
+# They are pinned, so a later run against an L-01K dump keeps what is already
+# in vendor/ instead of quietly filling them with docomo data.
+#
+# All blobs below are from LGV35 LGV3520f
+# joan_kddi_jp-user 9 PKQ1.190414.001 2007610508923 release-keys
+
+# Audio calibration (LGV35)
+vendor/etc/acdbdata/Bluetooth_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Bluetooth_cal.acdb|f6a3fb2b9b0ff2d415e7de28d393bcbfbb6d931b
+vendor/etc/acdbdata/Codec_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Codec_cal.acdb|04761259f6a1be00b1f9691ee54bf2392e517ebf
+vendor/etc/acdbdata/General_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/General_cal.acdb|2e390828b866c3a6845c1a12064dfb9d10f432b0
+vendor/etc/acdbdata/Global_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Global_cal.acdb|73ec1a881b24f0c82fe14ca66cf1fc559b08b6fd
+vendor/etc/acdbdata/Handset_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Handset_cal.acdb|d19ef0b59c396f909d873e9bb62ef2617ac872ae
+vendor/etc/acdbdata/Hdmi_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Hdmi_cal.acdb|92c6ab7e0b6e9af91de15e84f918cbfb6113a1ce
+vendor/etc/acdbdata/Headset_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Headset_cal.acdb|da3bb582285f5d93cde0a487ff5a32d04ed27814
+vendor/etc/acdbdata/Speaker_cal.acdb:vendor/etc/acdbdata_joan_kddi_jp/Speaker_cal.acdb|0749bca620c2f35dbd38cd4719020714b2f51c4e
+vendor/etc/acdbdata/adsp_avs_config.acdb:vendor/etc/acdbdata_joan_kddi_jp/adsp_avs_config.acdb|2b1d37be4e69445802b1a3165e7a23de5b6c93c8
+
+# FeliCa (LGV35)
+system/etc/felica/common.cfg:system/etc/felica_joan_kddi_jp/common.cfg|d604024b3065f11e736332ef01405c9f227a6553
+system/etc/felica/config_felica.xml:system/etc/felica_joan_kddi_jp/config_felica.xml|e149ff8b99cbfb12adb92da96b7f9970e7b9cdc7
+system/etc/felica/felica.cfg:system/etc/felica_joan_kddi_jp/felica.cfg|f0e23987f1a34616c02dc0e7f4924b6d0e6be59f
+system/etc/felica/mfm.cfg:system/etc/felica_joan_kddi_jp/mfm.cfg|ad1d120d871c6eabfa64b2b0d294fe104239d0d0
+system/etc/felica/mfs.cfg:system/etc/felica_joan_kddi_jp/mfs.cfg|c3cd213fdd0fa1cee6562541a0ba5afc44670ca4
+
+# Wifi (LGV35)
+vendor/etc/wifi/bdwlan.bin:vendor/etc/wifi/bdwlan_joan_kddi_jp.bin|91d140faa98459142da9fc8ccb1cbc7026b4ff59
+vendor/etc/wifi/bdwlan_ch0.bin:vendor/etc/wifi/bdwlan_ch0_joan_kddi_jp.bin|66ec2e6ae282e1e20d9e5967382eb7aa94a62ad5
+vendor/etc/wifi/bdwlan_ch1.bin:vendor/etc/wifi/bdwlan_ch1_joan_kddi_jp.bin|024be70167716900fc5bd0d14bbae4c05184b2a3
