@@ -74,8 +74,14 @@ system/etc/felica/mfs.cfg
 #
 # Everything here is signed with FeliCa Networks' key, and that signature is
 # what the ACLs check: felica_access.xml names it on the NFC side, and MFC
-# checks the calling app's own against the permit it was handed, so these stay
-# PRESIGNED - re-signing any of them breaks one check or the other.
+# checks the calling app's own against the permit it was handed. Keep the
+# menu apps PRESIGNED - the permit is issued against that key, and a repacked
+# MobileFeliCaMenuMainApp would not verify.
+#
+# MobileFeliCaClient is the exception: it is repacked to restore its own
+# logging (see extract-files.py) and comes back platform-signed. Nothing
+# checks *its* signature except felica_access.xml, which NfceeAccessControl
+# also satisfies for platform-signed callers.
 #
 # These stay on /product because com.felicanetworks.felica.xml names
 # /product/framework/com.felicanetworks.felica.jar by absolute path; there is a
@@ -94,14 +100,15 @@ product/app/MobileFeliCaMenuApp/MobileFeliCaMenuApp.apk;PRESIGNED|b03244055d3750
 product/app/MobileFeliCaSettingApp/MobileFeliCaSettingApp.apk;PRESIGNED|d87e20869b9f0a170eb1911d71f1f1e9a216c672
 product/app/MobileFeliCaWebPlugin/MobileFeliCaWebPlugin.apk;PRESIGNED|9f1c6c246699e50d25f8ea1d6ea5273c76103b88
 product/app/MobileFeliCaWebPluginBoot/MobileFeliCaWebPluginBoot.apk;PRESIGNED|2e5149b76163ff073e04117fa477fcd365dc981c
-# The two priv-app ones keep their dex deflated, which a privileged app is not
-# supposed to do - soong's check_prebuilt_presigned_apk rejects them. Storing it
-# would be safe for the signature, since these carry a v1 JAR signature and no
+# MobileFeliCaMenuMainApp keeps its dex deflated, which a privileged app is not
+# supposed to do - soong's check_prebuilt_presigned_apk rejects it. Storing it
+# would be safe for the signature, since it carries a v1 JAR signature and no
 # APK Signing Block, and v1 signs entry contents rather than how they are
-# packed - but the apks would then have to be realigned, and the only thing the
+# packed - but the apk would then have to be realigned, and the only thing the
 # check buys is that ART can map the dex instead of unpacking it once into
 # dalvik-cache. Not worth rewriting a signed blob over, so the check is skipped.
-product/priv-app/MobileFeliCaClient/MobileFeliCaClient.apk;PRESIGNED;SKIPAPKCHECKS|4a3b79cc68f56d214e8068b457edec86d9a40961
+# MobileFeliCaClient is repacked anyway, so it comes out of that clean.
+product/priv-app/MobileFeliCaClient/MobileFeliCaClient.apk|4a3b79cc68f56d214e8068b457edec86d9a40961|7b8d177686094e46e9c52b70d975c84c87126492
 product/priv-app/MobileFeliCaMenuMainApp/MobileFeliCaMenuMainApp.apk;PRESIGNED;SKIPAPKCHECKS|7104d467a6de1ba2a9e8296f357586480b399aed
 
 # Wifi

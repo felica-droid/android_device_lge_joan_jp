@@ -31,6 +31,17 @@ blob_fixups: blob_fixups_user_type = {
         .regex_replace(
             r'<resources xmlns:xliff=',
             '<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:xliff='),
+    # MobileFeliCaClient reports a failure as a bare numeric FelicaException and
+    # keeps its reasoning to itself: R8 emptied LogMgr's two sinks to
+    # "return-void" before the apk shipped, so the several thousand call sites
+    # that mark every branch it takes produce nothing. patches/MobileFeliCaClient
+    # fills them back in against android.util.Log under the tag "MfcLog".
+    #
+    # This costs the apk FeliCa Networks' signature, which is the one
+    # felica_access.xml names; it comes back platform-signed instead, and
+    # NfceeAccessControl admits that.
+    'product/priv-app/MobileFeliCaClient/MobileFeliCaClient.apk': blob_fixup()
+        .apktool_patch('patches/MobileFeliCaClient'),
     'vendor/etc/init/vendor.lge.hardware.nfc@1.1-service.rc': blob_fixup()
         .regex_replace(
             "    interface android.hardware.nfc@1.1::INfc default",
