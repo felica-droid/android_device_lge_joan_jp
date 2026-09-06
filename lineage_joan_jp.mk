@@ -14,14 +14,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/non_ab_device.mk)
 
-# Inherit from l01k device
-$(call inherit-product, device/lge/l01k/device.mk)
+# Inherit from joan_jp device
+$(call inherit-product, device/lge/joan_jp/device.mk)
 
 # Device identifiers
-PRODUCT_DEVICE := l01k
-PRODUCT_NAME := lineage_l01k
+PRODUCT_DEVICE := joan_jp
+PRODUCT_NAME := lineage_joan_jp
 PRODUCT_BRAND := lge
-PRODUCT_MODEL := l01k
+PRODUCT_MODEL := joan_jp
 PRODUCT_MANUFACTURER := LGE
 PRODUCT_RELEASE_NAME := V30
 

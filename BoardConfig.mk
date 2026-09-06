@@ -4,15 +4,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/lge/l01k
+DEVICE_PATH := device/lge/joan_jp
 
-TARGET_OTA_ASSERT_DEVICE := L-01K,joan,l01k
+TARGET_OTA_ASSERT_DEVICE := L-01K,LGV35,joan,joan_jp,l01k,lgv35
 
 # inherit from common repository
 include device/lge/joan-common/BoardConfigCommon.mk
 
 # Kernel
-TARGET_KERNEL_CONFIG := lineageos_l01k_defconfig
+TARGET_KERNEL_CONFIG := lineageos_joan_jp_defconfig
 
 # SELinux
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
@@ -23,4 +23,4 @@ DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
 DEVICE_MANIFEST_FILE += $(DEVICE_PATH)/manifest.xml
 
 # inherit from the proprietary version
-include vendor/lge/l01k/BoardConfigVendor.mk
+include vendor/lge/joan_jp/BoardConfigVendor.mk

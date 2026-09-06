@@ -116,10 +116,10 @@ vendor/etc/wifi/bdwlan.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan.bin
 vendor/etc/wifi/bdwlan_ch0.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan_ch0.bin
 vendor/etc/wifi/bdwlan_ch1.bin;SYMLINK=vendor/firmware/wlan/qca_cld/bdwlan_ch1.bin
 
-# Everything below belongs to the other japanese handset. lineage_l01k serves
-# both, and init.joan.rc binds these over their counterparts above once it
-# knows it is running on an LGV35, so they land beside them rather than
-# replacing them. Extract them with the LGV35 dump as the source:
+# Everything below belongs to the other japanese handset. lineage_joan_jp
+# serves both, and init.joan.rc binds these over their counterparts above
+# once it knows it is running on an LGV35, so they land beside them rather
+# than replacing them. Extract them with the LGV35 dump as the source:
 #
 #   ./extract-files.py --only-target -s '*(LGV35)' <LGV3520f>/extracted
 #

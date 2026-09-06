@@ -50,7 +50,7 @@ blob_fixups: blob_fixups_user_type = {
 }  # fmt: skip
 
 module = ExtractUtilsModule(
-    'l01k',
+    'joan_jp',
     'lge',
     blob_fixups=blob_fixups,
     lib_fixups=lib_fixups,

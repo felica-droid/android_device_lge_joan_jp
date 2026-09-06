@@ -6,4 +6,4 @@
 
 
 PRODUCT_MAKEFILES += \
-    $(LOCAL_DIR)/lineage_l01k.mk
+    $(LOCAL_DIR)/lineage_joan_jp.mk

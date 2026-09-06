@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-DEVICE_PATH := device/lge/l01k
+DEVICE_PATH := device/lge/joan_jp
 
 # Inherit common repository
 $(call inherit-product, device/lge/joan-common/joan-common.mk)
@@ -29,7 +29,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # on stock comes from LG's fork of packages/apps/Nfc; the reimplementation is
 # in that app. See docs/felica-port.md.
 # The xml and cfg files are not listed here: extract_utils emits those as
-# PRODUCT_COPY_FILES in l01k-vendor.mk, not as modules, so naming them would
+# PRODUCT_COPY_FILES in joan_jp-vendor.mk, not as modules, so naming them
 # only get them rejected as non-existent.
 PRODUCT_PACKAGES += \
 	MobileFeliCaClient \
@@ -45,4 +45,4 @@ PRODUCT_SOONG_NAMESPACES += \
     $(DEVICE_PATH)
 
 # Inherit proprietary blobs
-$(call inherit-product, vendor/lge/l01k/l01k-vendor.mk)
+$(call inherit-product, vendor/lge/joan_jp/joan_jp-vendor.mk)
