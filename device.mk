@@ -34,6 +34,17 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # only get them rejected as non-existent.
 $(call inherit-product, packages/apps/FelicaService/device.mk)
 
+# The secure element is provisioned per model and one image serves both
+# japanese handsets, so the configuration is per SKU and init.joan.rc binds the
+# matching set at early-init. FelicaParts lets that be overridden by hand, for
+# a handset whose element was provisioned as the other model - see
+# rootdir/system_ext/etc/init/init.felica_model.rc.
+PRODUCT_PACKAGES += \
+	FelicaParts
+
+PRODUCT_COPY_FILES += \
+	$(DEVICE_PATH)/rootdir/system_ext/etc/init/init.felica_model.rc:$(TARGET_COPY_OUT_SYSTEM_EXT)/etc/init/init.felica_model.rc
+
 PRODUCT_PACKAGES += \
 	MobileFeliCaClient \
 	MobileFeliCaMenuMainApp \

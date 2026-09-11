@@ -68,6 +68,23 @@ system/etc/felica/mfc_push.cfg
 system/etc/felica/mfm.cfg
 system/etc/felica/mfs.cfg
 
+# FeliCa (L-01K)
+# The same set again under its own name. The canonical path already holds it,
+# so init.joan.rc never binds this on an L-01K - it is here for the other
+# direction: the chip answers to the configuration it was formatted against,
+# and a handset whose secure element was provisioned as the other model needs
+# that set instead. FelicaParts binds whichever of these the user picks, and
+# it can only offer what is on the filesystem.
+#
+# Pinned for the same reason the LGV35 set below is: a later run against an
+# LGV35 dump would otherwise quietly fill these with au data.
+system/etc/felica/common.cfg:system/etc/felica_joan_dcm_jp/common.cfg|f5f06868437fccc77e2100243c5691d8cf66bae0
+system/etc/felica/config_felica.xml:system/etc/felica_joan_dcm_jp/config_felica.xml|72f4beee7d4d4131d3483a3053b27d860f971d1e
+system/etc/felica/felica.cfg:system/etc/felica_joan_dcm_jp/felica.cfg|f0e23987f1a34616c02dc0e7f4924b6d0e6be59f
+system/etc/felica/mfc_push.cfg:system/etc/felica_joan_dcm_jp/mfc_push.cfg|d6badf6245ccfeedfec7cf800b4dc75e33d03f60
+system/etc/felica/mfm.cfg:system/etc/felica_joan_dcm_jp/mfm.cfg|795de672a841ea870c45045be03425dc09412a13
+system/etc/felica/mfs.cfg:system/etc/felica_joan_dcm_jp/mfs.cfg|0b263f6c5f3b4156590b6ba6e5202989367b6b0d
+
 # FeliCa (おサイフケータイ) - from L-01K L-01K20k
 # The apks and jars are byte-identical on both japanese handsets; only the
 # etc/felica/*.cfg differ, and those are carried per SKU further down.

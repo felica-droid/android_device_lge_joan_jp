@@ -1,0 +1,28 @@
+#
+# Copyright (C) 2026 The LineageOS Project
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+# The secure element only answers to the configuration it was formatted
+# against, which is not always the one this handset shipped with - a chip
+# provisioned as the other model needs that model's set instead.
+# init.joan.rc binds by SKU at early-init; this binds whatever FelicaParts was
+# told to use on top of it.
+#
+# The property name is the same on every device that ships this, so it says
+# "model" rather than naming the vendor or how the sets happen to be spelled.
+# Here a model is the SKU string init.joan.rc already uses, which makes the
+# values joan_dcm_jp and joan_kddi_jp.
+#
+# Lives on system_ext because the property has to be writable by an app:
+# /vendor and /odm scripts expand ${} through vendor_init, which cannot read a
+# system property, and a vendor property cannot be set from an app at all.
+# init parses this one itself, so it can read either.
+#
+# Fires when the persistent properties are loaded, which is still long before
+# anything opens these files - a bind mount is invisible to a file descriptor
+# somebody already holds. An empty value, and a value with no directory of its
+# own, leave whatever init.joan.rc bound in place; init ignores ENOENT.
+on property:persist.felica.model=*
+    mount none /system/etc/felica_${persist.felica.model} /system/etc/felica bind
