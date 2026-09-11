@@ -35,6 +35,9 @@
                 android:name="com.android.settings.order"
                 android:value="1" />
             <meta-data
+                android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_felica" />
+            <meta-data
                 android:name="com.android.settings.summary"
                 android:resource="@string/felica_setting_summary" />
         </activity>

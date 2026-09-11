@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 The LineageOS Project
+
+     SPDX-License-Identifier: Apache-2.0
+-->
+<resources>
+    <!-- Where the sets live. joan is not Treble, so the FeliCa configuration
+         sits under /system rather than /vendor. -->
+    <string name="felica_config_dir" translatable="false">/system/etc</string>
+
+    <!-- The sets are named after ro.vendor.lge.sku, which is not what either
+         handset is sold as. "<directory suffix>|<what to show>". -->
+    <string-array name="felica_model_labels" translatable="false">
+        <item>joan_dcm_jp|L-01K (docomo)</item>
+        <item>joan_kddi_jp|LGV35 (au)</item>
+    </string-array>
+</resources>

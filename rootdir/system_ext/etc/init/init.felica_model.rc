@@ -24,5 +24,20 @@
 # anything opens these files - a bind mount is invisible to a file descriptor
 # somebody already holds. An empty value, and a value with no directory of its
 # own, leave whatever init.joan.rc bound in place; init ignores ENOENT.
+#
+# Binding over a path that is already a bind mount propagates the new mount to
+# the peers of the one underneath, and the peer path is that mount's root - the
+# set init.joan.rc bound at early-init. So picking another model here also
+# leaves a copy of it on top of the SKU's own directory:
+#
+#   /system/etc/felica_joan_kddi_jp -> /system/etc/felica              (early-init)
+#   /system/etc/felica_joan_dcm_jp  -> /system/etc/felica              (this)
+#   /system/etc/felica_joan_dcm_jp  -> /system/etc/felica_joan_kddi_jp (propagated)
+#
+# Marking either mount private would stop it, and would also stop it reaching
+# the namespace the apps live in, which is the whole point of the bind. It only
+# matters when the choice is changed twice without rebooting in between, which
+# is what the reboot the settings screen asks for avoids: at boot the source
+# directories are untouched, so whichever set is picked binds the real one.
 on property:persist.felica.model=*
     mount none /system/etc/felica_${persist.felica.model} /system/etc/felica bind
