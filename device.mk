@@ -34,6 +34,11 @@ PRODUCT_PRODUCT_PROPERTIES += \
 # only get them rejected as non-existent.
 $(call inherit-product, packages/apps/FelicaService/device.mk)
 
+# The stock HAL config with the listen mode route ids rewritten - the header
+# in the file says why. Extracting it instead would put stock's back.
+PRODUCT_COPY_FILES += \
+	$(DEVICE_PATH)/nfc/libnfc-cxd22xx.conf:$(TARGET_COPY_OUT_VENDOR)/etc/libnfc-cxd22xx.conf
+
 # The secure element is provisioned per model and one image serves both
 # japanese handsets, so the configuration is per SKU and init.joan.rc binds the
 # matching set at early-init. FelicaParts lets that be overridden by hand, for
